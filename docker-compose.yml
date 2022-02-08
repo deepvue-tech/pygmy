@@ -18,8 +18,8 @@ services:
     image: amit19/pygmy
     restart: always
     build: .
-    # ports:
-    #  - "9119:9119"
+    ports:
+     - "9119:9119"
     links:
       - database
     environment:
@@ -34,19 +34,19 @@ services:
     depends_on:
       - database
 
-  pygmyui:
-    image: amit19/pygmy
-    restart: always
-    build: .
-    ports:
-     - "8000:8000"
-    links:
-      - pygmy
-    environment:
-      - PYGMY_API_ADDRESS=pygmy
-    command: sh -c "cd pygmyui && gunicorn --log-file /var/log/pygmy/uierror_logs.log --access-logfile /var/log/pygmy/uiacclogs.log --bind 0.0.0.0:8000 --workers 2 pygmyui.wsgi && cd .."
-    depends_on:
-      - pygmy
+  # pygmyui:
+  #   image: amit19/pygmy
+  #   restart: always
+  #   build: .
+  #   ports:
+  #    - "8000:8000"
+  #   links:
+  #     - pygmy
+  #   environment:
+  #     - PYGMY_API_ADDRESS=pygmy
+  #   command: sh -c "cd pygmyui && gunicorn --log-file /var/log/pygmy/uierror_logs.log --access-logfile /var/log/pygmy/uiacclogs.log --bind 0.0.0.0:8000 --workers 2 pygmyui.wsgi && cd .."
+  #   depends_on:
+  #     - pygmy
 
 volumes:
   pgdata:
